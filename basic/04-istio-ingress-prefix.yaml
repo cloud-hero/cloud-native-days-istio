@@ -1,0 +1,126 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: red-vs-prefix
+  namespace: red
+spec:
+  gateways:
+  - red-gw-prefix
+  hosts:
+  - colour.ko2.com
+  http:
+  - match:
+    - uri:
+        prefix: "/red"
+    rewrite:
+      uri: "/"
+    route:
+    - destination:
+        host: red-svc-ci.red.svc.cluster.local
+        port:
+          number: 80
+      weight: 100
+
+---
+
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: red-gw-prefix
+  namespace: red
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - hosts:
+    - colour.ko2.com
+    port:
+      name: http
+      number: 80
+      protocol: HTTP
+
+---
+
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: green-vs-prefix
+  namespace: green
+spec:
+  gateways:
+  - green-gw-prefix
+  hosts:
+  - colour.ko2.com
+  http:
+  - match:
+    - uri:
+        prefix: "/green"
+    rewrite:
+      uri: "/"
+    route:
+    - destination:
+        host: green-svc-ci.green.svc.cluster.local
+        port:
+          number: 80
+      weight: 100
+
+---
+
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: green-gw-prefix
+  namespace: green
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - hosts:
+    - colour.ko2.com
+    port:
+      name: http
+      number: 80
+      protocol: HTTP
+
+---
+
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: blue-vs-prefix
+  namespace: blue
+spec:
+  gateways:
+  - blue-gw-prefix
+  hosts:
+  - colour.ko2.com
+  http:
+  - match:
+    - uri:
+        prefix: "/blue"
+    rewrite:
+      uri: "/"
+    route:
+    - destination:
+        host: blue-svc-ci.blue.svc.cluster.local
+        port:
+          number: 80
+      weight: 100
+
+---
+
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: blue-gw-prefix
+  namespace: blue
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - hosts:
+    - colour.ko2.com
+    port:
+      name: http
+      number: 80
+      protocol: HTTP

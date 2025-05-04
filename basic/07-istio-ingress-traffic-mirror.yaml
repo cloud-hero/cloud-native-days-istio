@@ -1,0 +1,19 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: red-vs
+  namespace: red
+spec:
+  gateways:
+  - red-gw
+  hosts:
+  - red.ko2.com
+  http:
+  - route:
+    - destination:
+        host: red-svc-ci.red.svc.cluster.local
+        port:
+          number: 80
+      weight: 100
+    mirror:
+      host: blue-svc-ci.blue.svc.cluster.local

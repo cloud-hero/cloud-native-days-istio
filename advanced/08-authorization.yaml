@@ -1,0 +1,14 @@
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+ name: app1-deny-post
+ namespace: app1
+spec:
+ action: DENY
+ rules:
+ - from:
+   - source:
+       namespaces: ["app2"]
+   to:
+   - operation:
+       methods: ["POST"]

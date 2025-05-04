@@ -1,0 +1,17 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: app1-delay
+  namespace: app1
+spec:
+  hosts:
+  - app1-svc-ci.app1.svc.cluster.local
+  http:
+  - fault:
+      delay:
+        fixedDelay: 7s
+        percentage:
+          value: 100
+    route:
+    - destination:
+        host: app1-svc-ci.app1.svc.cluster.local

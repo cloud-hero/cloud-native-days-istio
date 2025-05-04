@@ -1,0 +1,78 @@
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: red-gw
+  namespace: red
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - hosts:
+    - red.ko2.com
+    port:
+      name: http
+      number: 80
+      protocol: HTTP
+  - hosts:
+    - red.ko2.com
+    port:
+      name: https
+      number: 443
+      protocol: HTTPS
+    tls:
+      mode: SIMPLE
+      credentialName: ko2-certs
+
+---
+
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: green-gw
+  namespace: green
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - hosts:
+    - green.ko2.com
+    port:
+      name: http
+      number: 80
+      protocol: HTTP
+  - hosts:
+    - green.ko2.com
+    port:
+      name: https
+      number: 443
+      protocol: HTTPS
+    tls:
+      mode: SIMPLE
+      credentialName: ko2-certs
+
+---
+
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: blue-gw
+  namespace: blue
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - hosts:
+    - blue.ko2.com
+    port:
+      name: http
+      number: 80
+      protocol: HTTP
+  - hosts:
+    - blue.ko2.com
+    port:
+      name: https
+      number: 443
+      protocol: HTTPS
+    tls:
+      mode: SIMPLE
+      credentialName: ko2-certs

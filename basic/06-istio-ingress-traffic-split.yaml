@@ -1,0 +1,46 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: colour-vs-split
+  namespace: colour
+spec:
+  gateways:
+  - colour-gw
+  hosts:
+  - colour.ko2.com
+  http:
+  - route:
+    - destination:
+        host: red-svc-ci.red.svc.cluster.local
+        port:
+          number: 80
+      weight: 33
+    - destination:
+        host: green-svc-ci.green.svc.cluster.local
+        port:
+          number: 80
+      weight: 33
+    - destination:
+        host: blue-svc-ci.blue.svc.cluster.local
+        port:
+          number: 80
+      weight: 34
+
+---
+
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: colour-gw
+  namespace: colour
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - hosts:
+    - colour.ko2.com
+    port:
+      name: http
+      number: 80
+      protocol: HTTP
+

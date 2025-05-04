@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app1-deployment
+  namespace: app1
+  labels:
+    run: app1
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      run: app1
+  template:
+    metadata:
+      labels:
+        run: app1
+    spec:
+      containers:
+      - name: app1
+        image: cloudhero/go-rest
+        ports:
+        - containerPort: 80
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app2-deployment
+  namespace: app2
+  labels:
+    run: app2
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      run: app2
+  template:
+    metadata:
+      labels:
+        run: app2
+    spec:
+      containers:
+      - name: app2
+        image: cloudhero/go-rest
+        ports:
+        - containerPort: 80
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app3-deployment
+  namespace: app3
+  labels:
+    run: app3
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      run: app3
+  template:
+    metadata:
+      labels:
+        run: app3
+    spec:
+      containers:
+      - name: app3
+        image: cloudhero/go-rest
+        ports:
+        - containerPort: 80

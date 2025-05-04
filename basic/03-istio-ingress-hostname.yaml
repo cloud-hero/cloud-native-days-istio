@@ -1,0 +1,111 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: red-vs
+  namespace: red
+spec:
+  gateways:
+  - red-gw
+  hosts:
+  - red.ko2.com
+  http:
+  - route:
+    - destination:
+        host: red-svc-ci.red.svc.cluster.local
+        port:
+          number: 80
+      weight: 100
+
+---
+
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: red-gw
+  namespace: red
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - hosts:
+    - red.ko2.com
+    port:
+      name: http
+      number: 80
+      protocol: HTTP
+
+---
+
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: green-vs
+  namespace: green
+spec:
+  gateways:
+  - green-gw
+  hosts:
+  - green.ko2.com
+  http:
+  - route:
+    - destination:
+        host: green-svc-ci.green.svc.cluster.local
+        port:
+          number: 80
+      weight: 100
+
+---
+
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: green-gw
+  namespace: green
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - hosts:
+    - green.ko2.com
+    port:
+      name: http
+      number: 80
+      protocol: HTTP
+
+---
+
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: blue-vs
+  namespace: blue
+spec:
+  gateways:
+  - blue-gw
+  hosts:
+  - blue.ko2.com
+  http:
+  - route:
+    - destination:
+        host: blue-svc-ci.blue.svc.cluster.local
+        port:
+          number: 80
+      weight: 100
+
+---
+
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: blue-gw
+  namespace: blue
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - hosts:
+    - blue.ko2.com
+    port:
+      name: http
+      number: 80
+      protocol: HTTP
